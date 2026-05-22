@@ -1086,14 +1086,15 @@ app.on("second-instance", () => {
   }
 });
 
-app.on("window-all-closed", () => {
+app.on("will-quit", () => {
   if (audioBridge) {
     audioBridge.stop();
   }
-
   stopSimulatedAudioFallback();
+});
 
-  if (process.platform !== "darwin") {
-    app.quit();
-  }
+app.on("window-all-closed", () => {
+  // Handle zero-overlay case explicitly:
+  // Do nothing instead of quitting, so Paraline stays alive in the tray
+  // even if all displays are disabled via the per-display toggles.
 });
