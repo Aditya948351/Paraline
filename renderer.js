@@ -591,8 +591,17 @@ function updateAudioLevel(now) {
   }
 
   const helperDriven = latestSource === "helper";
-  const breathing = helperDriven ? 0.003 : 0.028 * (Math.sin(now * 0.00023) + 1);
-  const response = helperDriven ? 0.2 : 0.018;
+  
+  let currentBreathingAmp = 0.028;
+  let currentPhysicsSmooth = 0.018;
+  
+  if (visualizerState.selectedTheme === "ambientWave" && visualizerState.ambientWave) {
+      currentBreathingAmp = parseFloat(visualizerState.ambientWave.breathingAmplitude) || 0.028;
+      currentPhysicsSmooth = parseFloat(visualizerState.ambientWave.physicsSmoothing) || 0.018;
+  }
+  
+  const breathing = helperDriven ? 0.003 : currentBreathingAmp * (Math.sin(now * 0.00023) + 1);
+  const response = helperDriven ? 0.2 : currentPhysicsSmooth;
   smoothedLevel += ((incomingLevel + breathing) - smoothedLevel) * response;
 }
 
@@ -757,6 +766,8 @@ function renderFrame(now) {
       performanceMode: visualizerState.performanceMode
     });
   } else {
+    const ambientSettings = getAmbientWaveSettings();
+    context.globalCompositeOperation = ambientSettings.blendMode || "source-over";
     drawAmbientWave({
       context,
       width,
@@ -765,9 +776,10 @@ function renderFrame(now) {
       smoothedLevel,
       latestSource,
       edgeGradient,
-      settings: getAmbientWaveSettings(),
+      settings: ambientSettings,
       performanceMode: visualizerState.performanceMode
     });
+    context.globalCompositeOperation = "source-over";
   }
 
   context.globalAlpha = 1;

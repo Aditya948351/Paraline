@@ -42,7 +42,11 @@ const DEFAULT_SETTINGS = Object.freeze({
     tone: "blue",
     sensitivity: "medium",
     edgeMode: "bottom",
-    glowStrength: "medium"
+    glowStrength: "medium",
+    tuning: "default",
+    blendMode: "source-over",
+    physicsSmoothing: 0.018,
+    breathingAmplitude: 0.028
   }),
   reactiveBorder: Object.freeze({
     colorStyle: "rainbow",
