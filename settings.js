@@ -814,7 +814,7 @@ refreshThemeProfiles();
     function dispatchThemeUpdate() {
         if (!window.visualizerSettings) return;
         const selectedTheme = themeSelector.value;
-        const dropdowns = document.querySelectorAll('#dynamic-theme-settings .theme-trigger');
+        const dropdowns = document.querySelectorAll('#dynamic-theme-settings .theme-trigger, #dynamic-advanced-theme-settings .theme-trigger');
         
         const themePatch = {};
         dropdowns.forEach(dd => {

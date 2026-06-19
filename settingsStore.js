@@ -335,7 +335,11 @@ function sanitizeAmbientWave(input = {}) {
     edgeMode: pick(input.edgeMode, VALID_EDGE_MODES, DEFAULT_SETTINGS.ambientWave.edgeMode),
     glowStrength: pick(input.glowStrength, VALID_GLOW_STRENGTHS, DEFAULT_SETTINGS.ambientWave.glowStrength),
     customColors: sanitizeCustomColors(input.customColors, DEFAULT_SETTINGS.customColors),
-    customSensitivity: sanitizeSensitivity(input.customSensitivity)
+    customSensitivity: sanitizeSensitivity(input.customSensitivity),
+    tuning: typeof input.tuning === 'string' ? input.tuning : DEFAULT_SETTINGS.ambientWave.tuning,
+    blendMode: typeof input.blendMode === 'string' ? input.blendMode : DEFAULT_SETTINGS.ambientWave.blendMode,
+    physicsSmoothing: typeof input.physicsSmoothing === 'number' ? input.physicsSmoothing : DEFAULT_SETTINGS.ambientWave.physicsSmoothing,
+    breathingAmplitude: typeof input.breathingAmplitude === 'number' ? input.breathingAmplitude : DEFAULT_SETTINGS.ambientWave.breathingAmplitude
   };
 }
 
