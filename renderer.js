@@ -595,7 +595,7 @@ function updateAudioLevel(now) {
   const response = helperDriven ? 0.2 : 0.018;
   const deltaTime = lastFrameAt ? now - lastFrameAt : 16.6;
   const timeScale = deltaTime / 16.6;
-  smoothedLevel += ((incomingLevel + breathing) - smoothedLevel) * response * timeScale;
+  smoothedLevel += ((incomingLevel + breathing) - smoothedLevel) * Math.min(1, response * timeScale);
 }
 
 function renderFrame(now) {
